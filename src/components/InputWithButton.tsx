@@ -43,7 +43,7 @@ const SearchButton = styled.button`
 
 const InputWithButton = () => {
   const [input, setInput] = useState("");
-  console.log(input);
+  // console.log(input);
 
   return (
     <InputContainer>

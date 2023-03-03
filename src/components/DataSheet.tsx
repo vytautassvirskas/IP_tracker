@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { MyIpAdressData } from "../App";
 
 const DataContainer = styled.div`
   display: flex;
@@ -35,14 +36,17 @@ const CardText = styled.h4`
   color: rgb(3, 3, 3);
 `;
 
-const DataSheet = () => {
+interface DataSheetProps {
+  ipAdress: MyIpAdressData;
+}
+
+const DataSheet = ({ ipAdress }: DataSheetProps) => {
   const data = [
-    { title: "ip adress", text: "192.212.174.101" },
-    { title: "location", text: "Brooklyn, NY, 10001" },
-    { title: "timezone", text: "UTC-05:00" },
-    { title: "isp", text: "SpaceX Starlink" },
+    { title: "ip adress", text: ipAdress.ip },
+    { title: "location", text: ipAdress.location },
+    { title: "timezone", text: ipAdress.timezone },
+    { title: "isp", text: ipAdress.isp },
   ];
-  console.log(data);
 
   return (
     <DataContainer>
