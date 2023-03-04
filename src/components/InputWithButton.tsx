@@ -44,7 +44,7 @@ const SearchButton = styled.button`
 interface InputProps {
   ipAddress: string;
   setIpAddress: React.Dispatch<React.SetStateAction<string>>;
-  handleSearch: (e: React.MouseEvent) => void;
+  handleSearch: (e: React.FormEvent) => void;
 }
 
 const InputWithButton = ({
@@ -53,19 +53,21 @@ const InputWithButton = ({
   handleSearch,
 }: InputProps) => {
   return (
-    <InputContainer>
-      <SearchInput
-        type="text"
-        placeholder="Search for any IP address or domain"
-        value={ipAddress}
-        onChange={(e) => {
-          setIpAddress(e.target.value);
-        }}
-      ></SearchInput>
-      <SearchButton onClick={(e) => handleSearch(e)}>
-        <IconArrow src={iconArrow}></IconArrow>
-      </SearchButton>
-    </InputContainer>
+    <form action="" onSubmit={(e) => handleSearch(e)}>
+      <InputContainer>
+        <SearchInput
+          type="text"
+          placeholder="Search for any IP address or domain"
+          value={ipAddress}
+          onChange={(e) => {
+            setIpAddress(e.target.value);
+          }}
+        ></SearchInput>
+        <SearchButton type="submit">
+          <IconArrow src={iconArrow}></IconArrow>
+        </SearchButton>
+      </InputContainer>
+    </form>
   );
 };
 

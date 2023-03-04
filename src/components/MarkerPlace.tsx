@@ -10,6 +10,8 @@ const MarkerPlace = ({ address }: MarkerPlaceProps) => {
   const map = useMap();
   const position = [address.latitude, address.longitude];
   useEffect(() => {
+    console.log("MarkerPlace useefect veikia");
+
     map.flyTo(position, 13, {
       animate: true,
     });

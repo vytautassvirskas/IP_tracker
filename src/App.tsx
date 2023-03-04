@@ -98,7 +98,7 @@ function App() {
     }
   }
 
-  const handleSearch = (e: React.MouseEvent): void => {
+  const handleSearch = (e: React.FormEvent): void => {
     console.log("veikia funkcja");
 
     e.preventDefault();
