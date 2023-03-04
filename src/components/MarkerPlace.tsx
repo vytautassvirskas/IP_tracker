@@ -1,19 +1,19 @@
 import React, { useEffect } from "react";
 import { useMap, Marker, Popup } from "react-leaflet";
-import { MyIpAdressData } from "../App";
+import { AddressData } from "../App";
 
 interface MarkerPlaceProps {
-  ipAdress: MyIpAdressData;
+  address: AddressData;
 }
 
-const MarkerPlace = ({ ipAdress }: MarkerPlaceProps) => {
+const MarkerPlace = ({ address }: MarkerPlaceProps) => {
   const map = useMap();
-  const position = [ipAdress.latitude, ipAdress.longitude];
+  const position = [address.latitude, address.longitude];
   useEffect(() => {
     map.flyTo(position, 13, {
       animate: true,
     });
-  }, [map, ipAdress.latitude, ipAdress.longitude]);
+  }, [map, address.latitude, address.longitude]);
 
   return (
     <Marker position={position}>

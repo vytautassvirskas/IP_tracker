@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import iconArrow from "../assets/images/icon-arrow.svg";
 
@@ -41,21 +41,28 @@ const SearchButton = styled.button`
   }
 `;
 
-const InputWithButton = () => {
-  const [input, setInput] = useState("");
-  // console.log(input);
+interface InputProps {
+  ipAddress: string;
+  setIpAddress: React.Dispatch<React.SetStateAction<string>>;
+  handleSearch: (e: React.MouseEvent) => void;
+}
 
+const InputWithButton = ({
+  ipAddress,
+  setIpAddress,
+  handleSearch,
+}: InputProps) => {
   return (
     <InputContainer>
       <SearchInput
         type="text"
         placeholder="Search for any IP address or domain"
-        value={input}
+        value={ipAddress}
         onChange={(e) => {
-          setInput(e.target.value);
+          setIpAddress(e.target.value);
         }}
       ></SearchInput>
-      <SearchButton onClick={() => console.log("click")}>
+      <SearchButton onClick={(e) => handleSearch(e)}>
         <IconArrow src={iconArrow}></IconArrow>
       </SearchButton>
     </InputContainer>
