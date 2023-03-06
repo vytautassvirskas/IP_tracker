@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { MapContainer, TileLayer, useMap } from "react-leaflet";
+import { MapContainer, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import DataSheet from "./components/DataSheet";
 import InputWithButton from "./components/InputWithButton";
@@ -52,51 +52,12 @@ function App() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const API_KEY = "at_TgmrcUJ4ggnPgqm3NsVUpzC0apXLK";
   useEffect(() => {
-    const getAddress = async (): Promise<void> => {
-      setIsLoading(true);
-      try {
-        const url = `https://geo.ipify.org/api/v2/country,city?apiKey=${API_KEY}&ipAddress`;
-        const response = await fetch(url);
-        const data = await response.json();
-        const location = data.location;
-        setAlert("");
-        setTimeout(() => {
-          setIsLoading(false);
-          setAddress({
-            ...address,
-            ip: data.ip,
-            location: `${location.city}${
-              location.region && `, ${location.region}`
-            }${location.postalCode && `, ${location.postalCode}`}`,
-            timezone: `UTC ${location.timezone}`,
-            isp: data.isp,
-            latitude: location.lat,
-            longitude: location.lng,
-          });
-        }, 500);
-        // console.log("response: ", data);
-      } catch (error) {
-        // console.log(error);
-        setIsLoading(false);
-        setAlert("Connection error. Try again!");
-      }
-    };
-
     getAddress();
   }, []);
 
-  async function getEnteredAddress(): Promise<void> {
+  async function fetchAddress(url: string): Promise<void> {
     setIsLoading(true);
     try {
-      const ipRegex = /^([0-9]{1,3}\.){3}[0-9]{1,3}$/;
-      const domainRegex = /^((?!-)[A-Za-z0-9-]{1,63}(?<!-)\.)+[A-Za-z]{2,6}$/;
-      const url = `https://geo.ipify.org/api/v2/country,city?apiKey=${API_KEY}&${
-        ipRegex.test(ipAddress)
-          ? `ipAddress=${ipAddress}`
-          : domainRegex.test(ipAddress)
-          ? `domain=${ipAddress}`
-          : "ipAddress"
-      }`;
       const response = await fetch(url);
       const data = await response.json();
       const location = data.location;
@@ -114,55 +75,31 @@ function App() {
           longitude: location.lng,
         });
       }, 500);
-
-      // console.log("response: ", data);
     } catch (error) {
-      // console.log(error);
       setIsLoading(false);
       setAlert("Connection error. Try again!");
     }
   }
-  // async function fetchAddressData(ipAddress?: string): Promise<void> {
-  //   setIsLoading(true);
-  //   try {
-  //     const ipRegex = /^([0-9]{1,3}\.){3}[0-9]{1,3}$/;
-  //     const domainRegex = /^((?!-)[A-Za-z0-9-]{1,63}(?<!-)\.)+[A-Za-z]{2,6}$/;
-  //     const url = `https://geo.ipify.org/api/v2/country,city?apiKey=${API_KEY}&${
-  //       ipRegex.test(ipAddress)
-  //         ? `ipAddress=${ipAddress}`
-  //         : domainRegex.test(ipAddress)
-  //         ? `domain=${ipAddress}`
-  //         : "ipAddress"
-  //     }`;
-  //     const response = await fetch(url);
-  //     const data = await response.json();
-  //     const location = data.location;
-  //     setTimeout(() => {
-  //       setIsLoading(false);
-  //       setAddress({
-  //         ...address,
-  //         ip: data.ip,
-  //         location: `${location.city}${
-  //           location.region && `, ${location.region}`
-  //         }${location.postalCode && `, ${location.postalCode}`}`,
-  //         timezone: `UTC ${location.timezone}`,
-  //         isp: data.isp,
-  //         latitude: location.lat,
-  //         longitude: location.lng,
-  //       });
-  //     }, 500);
 
-  //     // console.log("response: ", data);
-  //   } catch (error) {
-  //     // console.log(error);
-  //     setIsLoading(false);
-  //     setAlert("Connection error. Try again!");
-  //   }
-  // }
+  async function getAddress(): Promise<void> {
+    const url = `https://geo.ipify.org/api/v2/country,city?apiKey=${API_KEY}&ipAddress`;
+    await fetchAddress(url);
+  }
+
+  async function getEnteredAddress(): Promise<void> {
+    const ipRegex = /^([0-9]{1,3}\.){3}[0-9]{1,3}$/;
+    const domainRegex = /^((?!-)[A-Za-z0-9-]{1,63}(?<!-)\.)+[A-Za-z]{2,6}$/;
+    const apiUrl = `https://geo.ipify.org/api/v2/country,city?apiKey=${API_KEY}&${
+      ipRegex.test(ipAddress)
+        ? `ipAddress=${ipAddress}`
+        : domainRegex.test(ipAddress)
+        ? `domain=${ipAddress}`
+        : "ipAddress"
+    }`;
+    await fetchAddress(apiUrl);
+  }
 
   const handleSearch = (e: React.FormEvent): void => {
-    console.log("veikia funkcja");
-
     e.preventDefault();
     setAlert("");
     getEnteredAddress();
@@ -179,12 +116,10 @@ function App() {
           scrollWheelZoom={true}
           style={{ height: "67vh", zIndex: 0 }}
         >
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
+          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
           <MarkerPlace address={address}></MarkerPlace>
         </MapContainer>
+
         <AppDiv>
           <Title>IP Address Tracker</Title>
           <InputWithButton

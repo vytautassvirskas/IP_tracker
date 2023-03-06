@@ -86,21 +86,14 @@ interface DataSheetProps {
 }
 
 const DataSheet = ({ address, alert, isLoading }: DataSheetProps) => {
-  console.log("address datasheet: ", address);
 
-  // const data = [
-  //   { title: "ip address", text: address.ip },
-  //   { title: "location", text: address.location },
-  //   { title: "timezone", text: address.timezone },
-  //   { title: "isp", text: address.isp },
-  // ];
   const data = [
-    { title: "ip address", text: "78.63.98.47" },
-    { title: "location", text: "Kaunas, Kaunas County" },
-    { title: "timezone", text: "UTC +02:00" },
-    { title: "isp", text: "Telia Lietuva" },
+    { title: "ip address", text: address.ip },
+    { title: "location", text: address.location },
+    { title: "timezone", text: address.timezone },
+    { title: "isp", text: address.isp },
   ];
-  console.log("DataSheet ~ data:", data);
+ 
 
   return (
     <DataContainer>
