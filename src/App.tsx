@@ -109,7 +109,10 @@ function App() {
     <>
       <GlobalStyle />
       <MainWrapper>
-        <BackgroundImage src={DekstopBackgroundImg}></BackgroundImage>
+        <BackgroundImage
+          src={DekstopBackgroundImg}
+          alt="background-image"
+        ></BackgroundImage>
         <MapContainer
           center={[address.latitude, address.longitude]}
           zoom={13}

@@ -58,7 +58,7 @@ const InputWithButton = ({
   handleSearch,
 }: InputProps) => {
   return (
-    <Form action="" onSubmit={(e) => handleSearch(e)}>
+    <Form onSubmit={(e) => handleSearch(e)}>
       <SearchInput
         type="text"
         placeholder="Search for any IP address or domain"
@@ -68,7 +68,7 @@ const InputWithButton = ({
         }}
       ></SearchInput>
       <SearchButton type="submit">
-        <IconArrow src={iconArrow}></IconArrow>
+        <IconArrow src={iconArrow} alt="arrow-icon"></IconArrow>
       </SearchButton>
     </Form>
   );
