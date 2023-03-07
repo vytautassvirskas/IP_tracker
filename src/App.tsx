@@ -116,6 +116,7 @@ function App() {
         <MapContainer
           center={[address.latitude, address.longitude]}
           zoom={13}
+          zoomControl={false}
           scrollWheelZoom={true}
           style={{ height: "67vh", zIndex: 0 }}
         >

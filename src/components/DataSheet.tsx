@@ -22,13 +22,12 @@ const DataContainer = styled.div`
 
 const DataCard = styled.div`
   flex-basis: 50%;
-  @media (max-width: 768px) {
-    margin-bottom: 2rem;
-  }
+
   &:not(:last-child) {
     border-right: 1px solid rgb(225, 225, 225);
     @media (max-width: 768px) {
       border-right: none;
+      margin-bottom: 2rem;
     }
   }
   &:not(:first-child) {
@@ -86,14 +85,12 @@ interface DataSheetProps {
 }
 
 const DataSheet = ({ address, alert, isLoading }: DataSheetProps) => {
-
   const data = [
     { title: "ip address", text: address.ip },
     { title: "location", text: address.location },
     { title: "timezone", text: address.timezone },
     { title: "isp", text: address.isp },
   ];
- 
 
   return (
     <DataContainer>
